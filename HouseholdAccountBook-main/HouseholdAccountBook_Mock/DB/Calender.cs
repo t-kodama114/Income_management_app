@@ -125,7 +125,7 @@ namespace HouseholdAccountBook_Mock.DB
                 try
                 {
                     //カレンダーDBに該当データが存在するか確認
-                    string sql = "select * from public.\"Calender\""
+                    string sql = "select * from paymentapp.\"Calender\""
                         + " where \"Calender\".\"Create_Date\" >= '" + start.ToString("yyyy/MM/dd") + "'"
                         + " and \"Calender\".\"Create_Date\" < '" + end.ToString("yyyy/MM/dd") + "'"
                         + " and \"Calender\".\"UserId\" = " + userId;
