@@ -84,7 +84,10 @@ namespace HouseholdAccountBook_Mock.User_Control
 
                     //カレンダーDB更新or登録
                     calenderList = Calender.CreateCalenderList(lastdays, incomeDataList, spendingDataList, calenderDate, userId);
-                    if (!Calender.UpdateCalender(calenderList, registerDate)) { return; }
+                    if (!Calender.UpdateCalender(calenderList, registerDate)) 
+                    { 
+                        return; 
+                    }
                 }
 
                 //最新データはそのまま取得
@@ -102,7 +105,10 @@ namespace HouseholdAccountBook_Mock.User_Control
 
                 //カレンダーDB更新or登録
                 calenderList = Calender.CreateCalenderList(lastdays, incomeDataList, spendingDataList, calenderDate, userId);
-                if (!Calender.UpdateCalender(calenderList, registerDate)) { return; }
+                if (!Calender.UpdateCalender(calenderList, registerDate)) 
+                { 
+                    return; 
+                }
             }
 
             for (int i = 0; i < lastdays; i++)

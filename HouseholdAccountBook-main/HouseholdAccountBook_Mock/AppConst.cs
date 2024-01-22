@@ -59,10 +59,11 @@ namespace HouseholdAccountBook_Mock
         public const string TOAST_FINISH = "\n終了しますか？";
 
         //接続文字列(テスト用)
-        public const string CONNECT_STRING_TEST = "Host=127.0.0.1;Port=5432;Username=postgres;Password=7215MKIA;Database=postgres;";
+        public const string CONNECT_STRING_TEST = "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;";
 
         //接続文字列(本番用)
-        public const string CONNECT_STRING = "Host=192.168.0.46;Port=5432;Username=postgres;Password=7215MKIA;Database=postgres;";
+        //public const string CONNECT_STRING_TEST = "Host=192.168.0.46;Port=5432;Username=postgres;Password=7215MKIA;Database=postgres;";
+        public const string CONNECT_STRING = "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;";
 
         //日付時間文字列
         public const string TIME_STR = "{0}/{1}/{2} {3}:{4}";

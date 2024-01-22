@@ -155,7 +155,7 @@ namespace HouseholdAccountBook_Mock.DB
         {
             try
             {
-                if(typeList.Count < 0) 
+                if(typeList == null) 
                 {
                     moneyPairs = new Dictionary<string, int>();
                     return false; 

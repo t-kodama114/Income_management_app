@@ -43,7 +43,10 @@ namespace HouseholdAccountBook_Mock
                     {
                         OriginMBox.MBoxInfoOK(AppConst.USER_MESSAGE);
                     }
-                    else { return; }
+                    else 
+                    { 
+                        return; 
+                    }
                 }
 
                 Application.EnableVisualStyles();
