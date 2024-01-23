@@ -668,7 +668,11 @@ namespace HouseholdAccountBook_Mock.User_Control
                 list = HouseholdABookBase.SelectPropManageList(start, end, userId);
             }
 
-            if (list.Count <= 0) { OriginMBox.MBoxInfoOK("データが存在しません。"); return; }
+            if (list.Count <= 0) 
+            { 
+                OriginMBox.MBoxInfoOK("データが存在しません。"); 
+                return; 
+            }
 
             //リストクリア
             LbIncome.Items.Clear();

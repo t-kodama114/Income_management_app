@@ -200,7 +200,7 @@ namespace HouseholdAccountBook_Mock.DB
                     dBManager.BeginTran();
 
                     //SQL文
-                    string sql = "select * from public.householdabookbase"
+                    string sql = "select * from public.\"householdabookbase\" "
                         + " where data_id = " + id
                         + " and creation_datetime >= '" + start.ToString("yyyy/MM/dd") + "'"
                         + " and creation_datetime < '" + end.ToString("yyyy/MM/dd") + "'"
@@ -246,9 +246,9 @@ namespace HouseholdAccountBook_Mock.DB
                 try
                 {
                     //SQL文
-                    string sql = "INSERT INTO \"householdabookbase\" VALUES("
-                        + id + ",CAST('" + date.ToString() + "' AS TIMESTAMP),'"
-                        + assets + "','" +classifcation + "'," + money + ",'" + content +",'" + userId + "')";
+                    string sql = "INSERT INTO public.\"householdabookbase\" VALUES("
+                        + id + ",CAST('" + date.ToString("yyyy-MM-dd HH:mm:ss") + "' AS TIMESTAMP),'"
+                        + assets + "','" +classifcation + "'," + money + ",'" + content +"'," + userId + ")";
 
                     npgSqlDBManager.Open();
                     npgSqlDBManager.BeginTran();
@@ -276,53 +276,56 @@ namespace HouseholdAccountBook_Mock.DB
         public static List<int> SelectPropManageList(int userId)
         {
             List<int> propList = new List<int>();
-
             using (NpgSqlDBManager dBManager = new NpgSqlDBManager())
             {
+                int income = 0;
+                int spending = 0;
                 try
                 {
                     //収入
-                    string sql = "select SUM(\"amountofmoney\") AS Total from public.\"householdabookbase\" where \"householdabookbase\".data_id = 0"
+                    string sql = "select SUM(\"amountofmoney\") AS income from public.\"householdabookbase\" where \"householdabookbase\".data_id = 0"
                         + " and \"userId\" = " + userId;
 
                     dBManager.Open();
                     dBManager.BeginTran();
 
                     NpgsqlDataReader reader = dBManager.ExecuteQuery(sql);
-                    int total = 0;
+                    //int income = 0;
                     while (reader.Read())
                     {
-                        total = int.Parse(reader["Total"].ToString());
-                        propList.Add(total);
+                        
+                        income = int.Parse(reader["income"].ToString());
+                        propList.Add(income);
+                        
                     }
-
+                    
                     reader.Close();
 
                     //支出
-                    sql = "select SUM(\"amountofmoney\") AS Total2 from public.\"householdabookbase\" where \"householdabookbase\".data_id = 1"
+                    sql = "select SUM(\"amountofmoney\") AS spending from public.\"householdabookbase\" where \"householdabookbase\".data_id = 1"
                         + " and \"userId\" = " + userId;
 
                     reader = dBManager.ExecuteQuery(sql);
-                    int total2 = 0;
+                    //int spending = 0;
                     while (reader.Read())
                     {
-                        total2 = int.Parse(reader["Total2"].ToString());
-                        propList.Add(total2);
+                        spending = int.Parse(reader["spending"].ToString());
+                        propList.Add(spending);
                     }
 
                     reader.Close();
 
                     //合計
-                    int sum = total - total2;
-                    propList.Add(sum);
+                    int pl = income - spending;
+                    propList.Add(pl);
 
                     return propList;
                 }
-                catch//(NpgsqlException e)
+                catch(NpgsqlException e)
                 {
                     dBManager.RollBack();
                     dBManager.Close();
-                    //string s = e.Message;
+                    string s = e.Message;
                     OriginMBox.MBoxErrorOK(AppConst.NEWDATA_MESSAGE);
                     return null;
                 }
@@ -339,10 +342,12 @@ namespace HouseholdAccountBook_Mock.DB
 
             using(NpgSqlDBManager dBManager = new NpgSqlDBManager())
             {
+                int income = 0;
+                int spending = 0;
                 try
                 {
                     //収入
-                    string sql = "select SUM(\"amountofmoney\") AS Total "
+                    string sql = "select SUM(\"amountofmoney\") AS income "
                         + "from public.\"householdabookbase\" where \"householdabookbase\".data_id = 0 "
                         + "and \"householdabookbase\".creation_datetime >= CAST('" + start.ToString() + "' AS TIMESTAMP) "
                         + "and \"householdabookbase\".creation_datetime < CAST('" + end.ToString() + "' AS TIMESTAMP)"
@@ -352,42 +357,42 @@ namespace HouseholdAccountBook_Mock.DB
                     dBManager.BeginTran();
 
                     NpgsqlDataReader reader = dBManager.ExecuteQuery(sql);
-                    int total = 0;
+                    //int income = 0;
                     while (reader.Read())
                     {
-                        if(!int.TryParse(reader["Total"].ToString(), out total))
+                        if(!int.TryParse(reader["income"].ToString(), out income))
                         {
-                            total = 0;
+                            income = 0;
                         }
-                        propList.Add(total);
+                        propList.Add(income);
                     }
 
                     reader.Close();
 
                     //支出
-                    sql = "select SUM(\"amountofmoney\") AS Total2 "
+                    sql = "select SUM(\"amountofmoney\") AS spending "
                         + "from public.\"householdabookbase\" where \"householdabookbase\".data_id = 1 "
                         + "and \"householdabookbase\".creation_datetime >= CAST('" + start.ToString() + "' AS TIMESTAMP) "
                         + "and \"householdabookbase\".creation_datetime < CAST('" + end.ToString() + "' AS TIMESTAMP)"
                         + "and \"userId\" = " + userId;
 
                     reader = dBManager.ExecuteQuery(sql);
-                    int total2 = 0;
+                    //int spending = 0;
                     while (reader.Read())
                     {
-                        if (!int.TryParse(reader["Total2"].ToString(), out total2))
+                        if (!int.TryParse(reader["spending"].ToString(), out spending))
                         {
-                            total2 = 0;
+                            spending = 0;
                         }
                         
-                        propList.Add(total2);
+                        propList.Add(spending);
                     }
 
                     reader.Close();
 
                     //合計
-                    int sum = total - total2;
-                    propList.Add(sum);
+                    int pl = income - spending;
+                    propList.Add(pl);
 
                     return propList;
                 }
