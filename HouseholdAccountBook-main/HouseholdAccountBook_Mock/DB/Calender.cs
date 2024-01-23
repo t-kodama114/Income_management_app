@@ -228,27 +228,27 @@ namespace HouseholdAccountBook_Mock.DB
                     npgSqlDBManager.Open();
                     npgSqlDBManager.BeginTran();
 
-                    if (calenderList.Count() < 1 && date == DateTime.MinValue) 
+                    if (calenderList.Count() < 1 && date == DateTime.MinValue)
                     {
-                        foreach (var pair in calenderList)
+                        foreach (Calender calender in calenderList)
                         {
                             string strSQL = "Insert into public.\"Calender\" VALUES( "
-                                + pair.Id + " , " + pair.Income + " , " 
-                                + pair.Spending + " , " + pair.CreateDate + " , "
-                                + pair.UserId + ")";
+                                + calender.Id + " , " + calender.Income + " , "
+                                + calender.Spending + " , " + calender.CreateDate + " , "
+                                + calender.UserId + ")";
 
                             npgSqlDBManager.ExecuteNonQuery(strSQL);
                         }
                     }
                     else
                     {
-                        foreach (var pair in calenderList)
+                        foreach (Calender calender in calenderList)
                         {
-                            string strSQL = "Update public.\"Calender\" set \"Income\" = " + pair.Income
-                                + ", \"Spending\" = " + pair.Spending
-                                + " where \"Id\" = " + pair.Id 
+                            string strSQL = "Update public.\"Calender\" set \"Income\" = " + calender.Income
+                                + ", \"Spending\" = " + calender.Spending
+                                + " where \"Id\" = " + calender.Id
                                 + " and \"Create_Date\" = '" + date.ToString("yyyy/MM/dd") + "'"
-                                + " and \"UserId\" = " + pair.UserId;
+                                + " and \"UserId\" = " + calender.UserId;
 
                             npgSqlDBManager.ExecuteNonQuery(strSQL);
                         }
@@ -258,10 +258,13 @@ namespace HouseholdAccountBook_Mock.DB
                 catch//(Npgsql.NpgsqlException e)
                 {
                     npgSqlDBManager.RollBack();
-                    npgSqlDBManager.Close();
                     //string s = e.Message;
                     OriginMBox.MBoxErrorOK(AppConst.CALENDER_MESSAGE2);
                     return false;
+                }
+                finally
+                {
+                    npgSqlDBManager.Close();
                 }
             }
             return true;
