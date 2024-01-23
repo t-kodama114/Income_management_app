@@ -12,7 +12,7 @@ namespace HouseholdAccountBook_Mock.Class
         /// iniファイルのファイルパス TODO 相対パスで通す
         /// </summary>
         //private const string IniFilePath = @"C:\Users\makia\OneDrive\ドキュメント\HouseholdAccountBook\HouseholdAccountBook_Mock\Ini\HouseholdAccountBook.ini";
-        private const string IniFilePath = @"C:\Users\gakut\source\repos\Income_management_app\HouseholdAccountBook-main\HouseholdAccountBook_Mock\HouseholdAccountBook.ini";
+        private const string IniFilePath = @"C:\pl\Setting\HouseholdAccountBook.ini";
 
         // iniファイル呼び出すラッパー(お決まり)
         // ==========================================================

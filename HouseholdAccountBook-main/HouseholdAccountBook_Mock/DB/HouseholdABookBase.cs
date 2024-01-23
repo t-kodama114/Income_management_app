@@ -246,9 +246,9 @@ namespace HouseholdAccountBook_Mock.DB
                 try
                 {
                     //SQL文
-                    string sql = "INSERT INTO \"householdabookbase\" VALUES("
-                        + id + ",CAST('" + date.ToString() + "' AS TIMESTAMP),'"
-                        + assets + "','" +classifcation + "'," + money + ",'" + content +",'" + userId + "')";
+                    string sql = "INSERT INTO public.\"householdabookbase\" VALUES("
+                        + id + ",CAST('" + date.ToString("yyyy-MM-dd HH:mm:ss") + "' AS TIMESTAMP),'"
+                        + assets + "','" +classifcation + "'," + money + ",'" + content +"'," + userId + ")";
 
                     npgSqlDBManager.Open();
                     npgSqlDBManager.BeginTran();
